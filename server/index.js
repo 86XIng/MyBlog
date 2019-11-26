@@ -6,6 +6,7 @@ import bodyParser from 'koa-bodyparser'
 import json from 'koa-json'
 import dbConfig from './dbs/config'
 import article from './interface/article'
+import tag from './interface/tags'
 const app = new Koa()
 
 // Import and Set Nuxt.js options
@@ -24,6 +25,7 @@ async function start () {
     useNewUrlParser:true
   })
   app.use(article.routes()).use(article.allowedMethods())
+  app.use(tag.routes()).use(tag.allowedMethods())
   const {
     host = process.env.HOST || '127.0.0.1',
     port = process.env.PORT || 3000

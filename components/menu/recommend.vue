@@ -62,7 +62,7 @@ export default {
         }
     },
     async mounted(){
-        let article=await axios.get('/manage/getTop')
+        let article=await axios.get('/article/getTop')
         this.articles = article.data.data
     }
 }

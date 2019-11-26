@@ -4,7 +4,7 @@ import axios from './utils/axios'
 import { async } from 'q'
 
 let router = new Router({
-    prefix:'/manage'
+    prefix:'/article'
 })
 
 router.get('/getTop',async (ctx)=>{

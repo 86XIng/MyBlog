@@ -9,7 +9,10 @@ const ArticleSchema = new Schema({
         type:String,
         require:true
     },
-    url:{
+    from:{
+        type:String
+    },
+    content:{
         type:String,
         require:true
     },
@@ -33,13 +36,13 @@ const ArticleSchema = new Schema({
         type:Number,
         default:0
     },
-    category:{
+    tag:{
         type:Number,
         default:0
     },
     isOriginal:{
         type:Boolean,
-        default:false
+        default:true
     },
     isIndex:{
         type:Boolean,
