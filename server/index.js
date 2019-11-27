@@ -7,6 +7,8 @@ import json from 'koa-json'
 import dbConfig from './dbs/config'
 import article from './interface/article'
 import tag from './interface/tags'
+import upload from './interface/upload'
+import koaBody from 'koa-body'
 const app = new Koa()
 
 // Import and Set Nuxt.js options
@@ -16,16 +18,20 @@ config.dev = app.env !== 'production'
 async function start () {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)
-  app.use(bodyParser({
-    extendTypes:['json','form','text']
-  }))
+  // app.use(bodyParser({
+  //   extendTypes:['json','form','text']
+  // }))
   app.proxy = true
+  app.use(koaBody({
+    multipart: true
+  }))
   app.use(json())
   mongoose.connect(dbConfig.dbs,{
     useNewUrlParser:true
   })
   app.use(article.routes()).use(article.allowedMethods())
   app.use(tag.routes()).use(tag.allowedMethods())
+  app.use(upload.routes()).use(upload.allowedMethods())
   const {
     host = process.env.HOST || '127.0.0.1',
     port = process.env.PORT || 3000

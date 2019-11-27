@@ -2,7 +2,7 @@
   <div>
       <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="标题">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.title"></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="form.desc"></el-input>
@@ -10,7 +10,8 @@
       <el-form-item label="封面">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :action="upload_qiniu_url"
+          :data="qiniuData"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
@@ -35,7 +36,7 @@
       </el-form-item>
        <div class="mavonEditor">
         <no-ssr>
-          <mavon-editor :toolbars="markdownOption" v-model="handbook"/>
+          <mavon-editor :toolbars="markdownOption" v-model="form.content"/>
         </no-ssr>
       </div>
       <el-form-item>
@@ -54,6 +55,11 @@ export default {
     },
     data() {
       return {
+        qiniuData: {
+          key: "",
+          token: ""
+        },
+        upload_qiniu_url: "https://up-z0.qiniup.com",
         dynamicTags:[],
         markdownOption: {
           bold: true, // 粗体
@@ -92,25 +98,32 @@ export default {
         },
         handbook: "#### how to use mavonEditor in nuxt.js",
         form: {
-          name: '',
+          title: '',
           desc: '',
           tag: '',
           original: true,
+          fontImg:'',
           from: '',
+          content:''
         },
         imageUrl: ''
       }
     },
     methods: {
-      onSubmit() {
-        console.log(this.form)
-        console.log(this.handbook)
-        console.log('submit!');
+      async onSubmit() {
+        let res = await axios.post('/article/addArticle',this.form)
+        console.log(res)
+        if(res.status==200&&res.data.code==0){
+          this.$message('添加成功');
+        }
       },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
+        console.log(this.imageUrl)
+        this.form.fontImg = "https://avatars0.githubusercontent.com/u/28418585?s=460&v=4"
       },
       beforeAvatarUpload(file) {
+        this.qiniuData.key = file.name;
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -121,14 +134,32 @@ export default {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
-      }
+      },
+      getQiniuToken: function() {
+        const _this = this;
+        axios
+          .post("/upload/getToken")
+          .then(function(res) {
+            console.log(res);
+            if (res.data.code==0) {
+              _this.qiniuData.token = res.data.data;
+            } else {
+              _this.$message({
+                message: res.data.info,
+                duration: 2000,
+                type: "warning"
+              });
+            }
+          });
+      },
     },
     mounted(){
       var that = this
        axios.get('/tags/get').then(function(data){
          console.log(data.data.data)
           that.dynamicTags = data.data.data
-      })
+      });
+      this.getQiniuToken();
     }
 }
 </script>

@@ -3,7 +3,7 @@
       <ul>
           <li v-for="(item,idx) in articles" :key="idx">
               {{idx}}
-              <nuxt-link :to="item.url">
+              <nuxt-link :to="'/article?id='+item._id">
                   <span>
                       {{item.title}}
                   </span>

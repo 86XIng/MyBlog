@@ -4,21 +4,22 @@ div(class="article")
   el-card(v-for="(item,idx) in articles" class="item" :key="idx" shadow="hover")
     el-row(:gutter="20" class="item-container")
       el-col(:span="8" class="img-container")
-        nuxt-link(class="item-link" :to="item.url")
+        nuxt-link(class="item-link" :to="'/article?id='+item._id")
           img(:src="item.fontImg" alt="")
       el-col(:span="16" class="item-body")
-        nuxt-link(class="item-link" :to="item.url")
+        nuxt-link(class="item-link" :to="'/article?id='+item._id")
           h5(class="item-title") {{item.title}}
         p(class="item-desc") {{item.desc}}
-        p(item-detail)
-          span {{item.releaseTime}}
-          span {{item.viewCount}}
-          span {{item.commentCount}}
-          span {{item.category}}
+        p(class="item-detail")
+          span 发布时间{{item.releaseTime}}
+          span 查看数{{item.viewCount}}
+          span 评论数{{item.commentCount}}
+          span 标签{{item.tag}}
 </template>
 
 <script lang="coffee">
 import Carousel from './carousel.vue'
+import axios from 'axios'
 export default {
   components:{
     Carousel
@@ -59,7 +60,12 @@ export default {
          category:'1',
          isOriginal:'true'
        },
-    ]
+    ],
+    page:0
+  mounted:->
+    res = await axios.get('/article/getArticle?page='+this.page++)
+    this.articles = res.data.data
+    console.log this.articles
 }
 </script>
 <style lang="scss" scoped>

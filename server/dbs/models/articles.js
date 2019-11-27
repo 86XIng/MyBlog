@@ -37,8 +37,8 @@ const ArticleSchema = new Schema({
         default:0
     },
     tag:{
-        type:Number,
-        default:0
+        type:String,
+        default:"未分类"
     },
     isOriginal:{
         type:Boolean,
