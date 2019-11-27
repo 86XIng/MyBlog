@@ -27,7 +27,7 @@ export default {
     },
     data(){
         return {
-            content:''
+            content:'Loading...'
         }
     },
     async mounted(){
@@ -45,6 +45,19 @@ export default {
             that.content=data.data.data[0].content
             content.log(that.content)
         }) */
+    },
+    watch:{
+      async '$route'(to, from){
+          let id = to.query.id
+        if(!id){
+            this.$router.push('/index')
+        }else{
+            let that = this
+            let res = await axios.get('/article/readArticle?id='+id)
+            this.content = res.data.data[0].content
+            console.log(this.content)
+        }
+      }
     }
 }
 </script>

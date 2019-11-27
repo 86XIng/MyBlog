@@ -1,15 +1,20 @@
 <template>
   <div class="recommend">
-      <ul>
-          <li v-for="(item,idx) in articles" :key="idx">
-              {{idx}}
-              <nuxt-link :to="'/article?id='+item._id">
-                  <span>
-                      {{item.title}}
-                  </span>
-              </nuxt-link>
-          </li>
-      </ul>
+    <h5>最近文章</h5>
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose">
+      <nuxt-link v-for="(item,idx) in articles" :key="idx" :index="idx" :to="'/article?id='+item._id">
+        <el-menu-item>
+            <i class="el-icon-menu"></i>
+            <span slot="title">
+                {{item.title}}
+            </span>
+        </el-menu-item>
+      </nuxt-link>
+    </el-menu>
   </div>
 </template>
 
@@ -19,47 +24,15 @@ export default {
     data(){
         return {
             articles:[{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },{
-                    title:'实现基于 Nuxt.js 的 SSR 应用',
-                    url:'/article/27'
-                },
+                    title:'loading...',
+                    _id:'/'
+                }
                 ]
         }
+    },
+    methods:{
+        handleOpen(key, keyPath){console.log (key,keyPath)},
+        handleClose(key, keyPath){console.log (key, keyPath)}
     },
     async mounted(){
         let article=await axios.get('/article/getTop')
@@ -70,17 +43,23 @@ export default {
 
 <style lang='scss' scoped>
 .recommend{
-    ul{
-        list-style: none;
-        li{
-            margin-bottom: 20px;
-            a{
-                text-decoration: none;
-                span{
-                    font-size: 13.3px;
-                }
-            }
+    background: rgba(255, 255, 255, 0.6);
+    h5{
+        text-align: center;
+        margin: 0;
+        padding: 5px 0;
+    }
+    .el-menu{
+        a{
+            text-decoration: none;
         }
+    }
+    .el-menu-item{
+        height: 3rem;
+        line-height: 3rem;
+        span{
+            font-size: 12px;
+        }  
     }
 }
 </style>

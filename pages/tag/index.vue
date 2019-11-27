@@ -15,10 +15,10 @@ div(class="page-index")
                         h5(class="item-title") {{item.title}}
                         p(class="item-desc") {{item.desc}}
                         p(class="item-detail")
-                        span 发布时间{{item.releaseTime}}
-                        span 查看数{{item.viewCount}}
-                        span 评论数{{item.commentCount}}
-                        span 标签{{item.tag}}
+                          span 发布时间{{item.releaseTime}}
+                          span 查看数{{item.viewCount}}
+                          span 评论数{{item.commentCount}}
+                          span 标签{{item.tag}}
       el-col(:span="6")
         my-menu
   
@@ -29,36 +29,15 @@ import axios from 'axios'
 import MyAside from '@/components/index/aside.vue'
 import MyMenu from '@/components/index/menu.vue'
 export default {
+    watchQuery: ['page']
     components:{
         MyAside,
         MyMenu
     }
     data:->
         articles:[{
-            title:'我把服务从七牛云迁移到阿里云了',
-            desc:'222',
-            url:'/article/162',
-            fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
-            releaseTime:'2019/11/10 下午',
-            lastModified:'',
-            viewCount:'133',
-            commentCount:'12',
-            category:'1',
-            isOriginal:'true'
-        },{
-            title:'我把服务从七牛云迁移到阿里云了',
-            desc:'222',
-            url:'/article/162',
-            fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
-            releaseTime:'2019/11/10 下午',
-            lastModified:'',
-            viewCount:'133',
-            commentCount:'12',
-            category:'1',
-            isOriginal:'true'
-        },{
-            title:'我把服务从七牛云迁移到阿里云了',
-            desc:'222',
+            title:'loading...',
+            desc:'loading...',
             url:'/article/162',
             fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
             releaseTime:'2019/11/10 下午',
@@ -69,12 +48,34 @@ export default {
             isOriginal:'true'
         }],
         page:0
+    watch: {
+      '$route':(to, from)->
+        id = to.query.id
+        res = await axios.get('/article/getByTag?id='+id)
+        if res.data.data.length==0 
+            this.articles = [
+                {title:'此标签下无内容',desc:'此标签下无内容                                                                                                              ',url:'/index',
+                fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
+
+                }
+            ]
+        else
+            this.articles = res.data.data
+            console.log this.articles
+    }
     mounted:->
         id = this.$route.query.id
-        res = await axios.get('/article/getByTag?id='+id+'&page='+this.page++)
-        if(res.data.data.length==0)
-        this.articles = res.data.data
-        console.log this.articles
+        res = await axios.get('/article/getByTag?id='+id)
+        if res.data.data.length==0 
+            this.articles = [
+                {title:'此标签下无内容',desc:'此标签下无内容                                                                                                              ',url:'/index',
+                fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
+
+                }
+            ]
+        else
+            this.articles = res.data.data
+            console.log this.articles
 }
 </script>
 

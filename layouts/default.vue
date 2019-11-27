@@ -22,11 +22,13 @@ export default{
 }
 </script>
 <style lang='scss' scoped>
+
 .el-header{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  background: rgba(255, 255, 255, 0.6);
   height: 5.1rem;
   z-index: 999;
 }

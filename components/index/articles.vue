@@ -27,7 +27,7 @@ export default {
   data:->
     articles:[
       {
-         title:'我把服务从七牛云迁移到阿里云了',
+         title:'loading...  ',
          desc:'222',
          url:'/article/162',
          fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
@@ -37,29 +37,7 @@ export default {
          commentCount:'12',
          category:'1',
          isOriginal:'true'
-       },{
-         title:'我把服务从七牛云迁移到阿里云了',
-         desc:'222',
-         url:'/article/162',
-         fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
-         releaseTime:'2019/11/10 下午',
-         lastModified:'',
-         viewCount:'133',
-         commentCount:'12',
-         category:'1',
-         isOriginal:'true'
-       },{
-         title:'我把服务从七牛云迁移到阿里云了',
-         desc:'222',
-         url:'/article/162',
-         fontImg:'https://static.surmon.me/thumbnail/cloud-logo-thumb.jpg?x-oss-process=style/blog.list.item.pc',
-         releaseTime:'2019/11/10 下午',
-         lastModified:'',
-         viewCount:'133',
-         commentCount:'12',
-         category:'1',
-         isOriginal:'true'
-       },
+       }
     ],
     page:0
   mounted:->
