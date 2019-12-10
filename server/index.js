@@ -27,7 +27,8 @@ async function start () {
   }))
   app.use(json())
   mongoose.connect(dbConfig.dbs,{
-    useNewUrlParser:true
+    useNewUrlParser:true,
+    useFindAndModify:true
   })
   app.use(article.routes()).use(article.allowedMethods())
   app.use(tag.routes()).use(tag.allowedMethods())

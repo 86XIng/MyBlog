@@ -12,7 +12,7 @@
         </nuxt-link>
       </el-col>
       <el-col :span="5">
-        播放器？
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=729082476&auto=1&height=32"></iframe>
       </el-col>
     </el-row>
   </div>

@@ -19,6 +19,21 @@ router.get('/getTop',async (ctx)=>{
     }
 })
 
+router.post('/manageIndex',async (ctx)=>{
+    let {_id,indexNum} = ctx.request.body
+    let article = await Articles.find({_id})
+    let res =await Articles.findOneAndUpdate({_id},{$set:{
+        indexNum:indexNum
+    }})
+    if(res){
+        ctx.body = {
+            code:0,
+            msg:'设置成功',
+            data:res
+        }
+    }
+})
+
 router.get('/getByTag',async (ctx)=>{
     let _id = ctx.request.query.id
     let res = await Tags.find({_id})
@@ -31,6 +46,15 @@ router.get('/getByTag',async (ctx)=>{
             msg:'查询成功',
             data:articles
         }
+    }
+})
+
+router.get('/pagination',async (ctx)=>{
+    let articles =await Articles.find({}).countDocuments()
+    ctx.body = {
+        code:0,
+        msg:'查询成功',
+        data:articles
     }
 })
 
@@ -48,11 +72,41 @@ router.get('/readArticle',async (ctx)=>{
     }
 })
 
+router.post('/updateArticle',async (ctx)=>{
+    const{
+        title,
+        desc,
+        fontImg,
+        tag,
+        isOriginal,
+        content,
+        from,
+        _id
+    } = ctx.request.body
+    let res =await Articles.findOneAndUpdate({_id},{$set:{
+        title,
+        desc,
+        fontImg,
+        tag,
+        isOriginal,
+        content,
+        from,
+        lastModified:Date.now()
+    }})
+    if(res){
+        ctx.body = {
+            code:0,
+            msg:'查询成功',
+            data:res
+        }
+    }
+})
+
 router.get('/getArticle',async (ctx)=>{
     let page = ctx.request.query.page
     let articles = await Articles.find({})
-    .skip(page * 5)
-    .limit(5)
+    .skip(page * 10)
+    .limit(10)
     .sort({'_id':-1})
     if(articles){
         ctx.body = {

@@ -1,7 +1,6 @@
 <template>
   <el-row class="tac">
   <el-col :span="24">
-    <h5>默认颜色</h5>
     <el-menu
       default-active="1-1"
       :default-openeds="['1']"

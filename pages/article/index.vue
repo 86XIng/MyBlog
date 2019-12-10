@@ -5,7 +5,28 @@
         <my-aside/>
       </el-col>
       <el-col :span="13">
-        {{content}}
+        <div class="content">
+
+          <h1 class="title">{{data.title}}</h1>
+          
+          <p class="info">
+            <span class="releaseTime">
+              发表时间:{{data.releaseTime}}
+            </span>
+            <span class="lastModified">
+              修改时间:{{data.lastModified}}
+            </span>
+            <span class="viewCount">
+              查看数:{{data.viewCount}}
+            </span>
+          </p>
+          <div class="fontImg">
+            <img :src="data.fontImg" alt="">
+          </div>
+          <no-ssr>
+            <vue-markdown :source="data.content"/>
+          </no-ssr>
+        </div>
       </el-col>
       <el-col :span="6">
         <my-menu/>
@@ -27,7 +48,7 @@ export default {
     },
     data(){
         return {
-            content:'Loading...'
+            data:{content:'Loading...'}
         }
     },
     async mounted(){
@@ -37,8 +58,8 @@ export default {
         }else{
             let that = this
             let res = await axios.get('/article/readArticle?id='+id)
-            this.content = res.data.data[0].content
-            console.log(this.content)
+            this.data = res.data.data[0]
+            console.log(this.data)
         }
         /* this.content = await axios.get('/article/readArticle?id='+id)
         axios.get('/article/readArticle?id='+id).then(function(data){
@@ -54,14 +75,32 @@ export default {
         }else{
             let that = this
             let res = await axios.get('/article/readArticle?id='+id)
-            this.content = res.data.data[0].content
-            console.log(this.content)
+            this.data = res.data.data[0]
+            console.log(this.data)
         }
       }
     }
 }
 </script>
 
-<style>
-
+<style lang="scss" scope>
+.content{
+  background: white;
+  .title{
+    margin-top: 0;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .fontImg{
+     img{
+      height:200px ;
+      width: 100%;
+     }
+  }
+  .info{
+    font-size: 12px;
+    color: rgba($color: #000000, $alpha: 0.9);
+  }
+}
 </style>

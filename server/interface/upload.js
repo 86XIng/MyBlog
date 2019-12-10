@@ -4,7 +4,7 @@ import qiniu from 'qiniu'
 import proc from 'process'
 
 
-let bucket = "deeptech";
+let bucket = "dpt";
 let accessKey = "4USkqzL2C6Ib_H-4vUP2hZ1PbCdMroIX9TRXqRvg"
 let secretKey = "7twFuKB_qPdc6PXyf5_ZN502JRNAnTguw1oxmJ0b";
 let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);

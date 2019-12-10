@@ -12,13 +12,13 @@ div(class="page-index")
                         img(:src="item.fontImg" alt="")
                     el-col(:span="16" class="item-body")
                         nuxt-link(class="item-link" :to="'/article?id='+item._id")
-                        h5(class="item-title") {{item.title}}
-                        p(class="item-desc") {{item.desc}}
-                        p(class="item-detail")
-                          span 发布时间{{item.releaseTime}}
-                          span 查看数{{item.viewCount}}
-                          span 评论数{{item.commentCount}}
-                          span 标签{{item.tag}}
+                          h5(class="item-title") {{item.title}}
+                          p(class="item-desc") {{item.desc}}
+                          p(class="item-detail")
+                            span 发布时间{{item.releaseTime}}
+                            span 查看数{{item.viewCount}}
+                            span 评论数{{item.commentCount}}
+                            span 标签{{item.tag}}
       el-col(:span="6")
         my-menu
   

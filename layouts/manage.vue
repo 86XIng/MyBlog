@@ -32,7 +32,6 @@ export default {
 
 <style lang="scss" scoped>
 .el-footer{
-    position: absolute;
     width: 100%;
     bottom: 0;
     text-align: center;

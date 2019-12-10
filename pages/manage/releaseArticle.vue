@@ -119,11 +119,13 @@ export default {
       },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
-        console.log(this.imageUrl)
-        this.form.fontImg = "https://avatars0.githubusercontent.com/u/28418585?s=460&v=4"
+
+        console.log(res.key)
+        this.form.fontImg = "res.key"
       },
       beforeAvatarUpload(file) {
-        this.qiniuData.key = file.name;
+        this.qiniuData.key = Math.random()*10+file.name;
+        // this.qiniuData.key = URL.createObjectURL(file.raw)
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
 

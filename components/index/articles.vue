@@ -15,6 +15,8 @@ div(class="article")
           span 查看数{{item.viewCount}}
           span 评论数{{item.commentCount}}
           span 标签{{item.tag}}
+  div(class="block")
+    el-pagination(layout="prev, pager, next" :total="totalPage" @current-change="change")
 </template>
 
 <script lang="coffee">
@@ -40,10 +42,18 @@ export default {
        }
     ],
     page:0
+    totalPage:0
   mounted:->
     res = await axios.get('/article/getArticle?page='+this.page++)
     this.articles = res.data.data
-    console.log this.articles
+    resTotal = await axios.get('/article/pagination')
+    this.totalPage = (Math.floor resTotal.data.data/10 +1)*10
+    # console.log this.totalPage
+  methods:{
+    change:(val)->
+      res = await axios.get('/article/getArticle?page='+(val-1))
+      this.articles = res.data.data
+  }
 }
 </script>
 <style lang="scss" scoped>

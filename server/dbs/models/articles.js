@@ -47,6 +47,10 @@ const ArticleSchema = new Schema({
     isIndex:{
         type:Boolean,
         default:false
+    },
+    indexNum:{
+        type:Number,
+        default:-1
     }
 })
 
